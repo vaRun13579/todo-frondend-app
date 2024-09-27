@@ -1,0 +1,23 @@
+Get todo list 
+    GET http://localhost:5000/
+
+Register 
+    POST http://localhost:5000/register
+
+Login 
+    POST http://localhost:5000/login
+
+Add task
+    POST http://localhost:5000/task/add
+
+Get Profile
+    get http://localhost:5000/profile
+
+Edit Profile
+    put http://localhost:5000/profile/edit
+
+Delete task
+    delete http://localhost:5000/task/:taskId/delete
+
+Edit task
+    put http://localhost:5000/task/:taskId/edit

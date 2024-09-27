@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+import {Routes, Route, Navigate, useNavigate} from "react-router-dom";
+import {useState} from "react";
+import UserContext from "./context/UserContext.js";
+
+import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard  from "./components/Dashboard";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import NotFound from "./components/NotFound";
+import ViewProfile from "./components/ViewProfile";
+
 import './App.css';
 
 function App() {
+  const [name, setName]=useState("");
+  const [userId, setUserId]=useState("");
+  const navigate=useNavigate();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <UserContext.Provider values={{name, userId, setUserId, setName}}>
+      {
+        <Routes>
+          <Route path="/" element={<ProtectedRoute><Dashboard name={name} userId={userId} navigate={navigate}/></ProtectedRoute>}/>
+          <Route path="/viewprofile" element={<ProtectedRoute><ViewProfile/></ProtectedRoute>}/>
+          <Route path="/login" element={<Login navigate={navigate}/>}/>
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/not-found" element={<NotFound/>}/>
+          <Route path="*" element={<Navigate to="/not-found" />} />
+        </Routes>
+      }
+    </UserContext.Provider>
+  )
 }
 
 export default App;
